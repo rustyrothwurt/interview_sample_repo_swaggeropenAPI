@@ -1,0 +1,767 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a sample Petstore server.  You can find \nout more about Swagger\
+    \ at \n[http://swagger.io](http://swagger.io) or on \n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n"
+  version: "1.0.0"
+  title: "Widget Swagger"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "virtserver.swaggerhub.com"
+basePath: "/rustyrothwurt/WidgetStore/1.0.0"
+schemes:
+- "https"
+- "http"
+paths:
+  /widget:
+    get:
+      tags:
+      - "widget"
+      summary: "Get widgets"
+      operationId: "get_widgets"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters: []
+      responses:
+        "405":
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+    post:
+      tags:
+      - "widget"
+      summary: "Add a widget"
+      operationId: "add_widget"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Widget object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Widget"
+      responses:
+        "405":
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+  /widget/{widgetId}:
+    get:
+      tags:
+      - "widget"
+      summary: "Find widget by ID"
+      description: "Returns a single widget"
+      operationId: "get_widget_by_id"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "widgetId"
+        in: "path"
+        description: "ID of widget to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Widget"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Widget not found"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+    post:
+      tags:
+      - "widget"
+      summary: "Updates a widget in the store with form data"
+      operationId: "update_widget_with_form"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "widgetId"
+        in: "path"
+        description: "ID of widget that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "name"
+        in: "formData"
+        description: "Updated name of the widget"
+        required: false
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+    delete:
+      tags:
+      - "widget"
+      summary: "Deletes a widget"
+      operationId: "delete_widget"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "widgetId"
+        in: "path"
+        description: "widget id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "widget not found"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+  /widget/{widgetId}/packaging:
+    get:
+      tags:
+      - "widget"
+      summary: "Get widget packagings by ID"
+      description: "Returns packagings"
+      operationId: "get_widget_packaging_by_id"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "widgetId"
+        in: "path"
+        description: "ID of widget to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/WidgetPackaging"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Widget not found"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+    post:
+      tags:
+      - "widget"
+      summary: "Creates a packaging for a widget"
+      operationId: "create_widget_packaging"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "widgetId"
+        in: "path"
+        description: "ID of widget to add a packaging for"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "desc"
+        in: "formData"
+        description: "Packaging description"
+        required: true
+        type: "string"
+      - name: "container"
+        in: "formData"
+        description: "Packaging container"
+        required: true
+        type: "string"
+      - name: "quantity"
+        in: "formData"
+        description: "Packaging description"
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+  /widget/{widgetId}/packaging/{packagingId}:
+    get:
+      tags:
+      - "widget"
+      summary: "Get widget packagings by ID and packaging ID"
+      description: "Returns packagings by ID"
+      operationId: "get_widget_packagings_by_id"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "widgetId"
+        in: "path"
+        description: "ID of widget to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "packagingId"
+        in: "path"
+        description: "ID of widget packagings to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/WidgetPackaging"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Widget not found"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+  /widget/{widgetId}/packaging/{packagingId}/prices:
+    get:
+      tags:
+      - "widget"
+      summary: "Get widget prices for customers by ID and packaging ID"
+      description: "Returns packagings prices by ID"
+      operationId: "get_widget_packagings_prices_by_id"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "widgetId"
+        in: "path"
+        description: "ID of widget to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "packagingId"
+        in: "path"
+        description: "ID of widget packagings to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CustomerPrices"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Widget not found"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+  /widget/{widgetId}/costs:
+    get:
+      tags:
+      - "widget"
+      summary: "Get widget costs by ID"
+      description: "Returns costs"
+      operationId: "get_widget_costs_by_id"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "widgetId"
+        in: "path"
+        description: "ID of widget to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SupplierCosts"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Widget not found"
+      x-swagger-router-controller: "swagger_server.controllers.widget_controller"
+  /supplier:
+    get:
+      tags:
+      - "supplier"
+      summary: "Get suppliers"
+      operationId: "get_suppliers"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Supplier"
+        "400":
+          description: "nothing found"
+        "404":
+          description: "Suppliers not found"
+      x-swagger-router-controller: "swagger_server.controllers.supplier_controller"
+    post:
+      tags:
+      - "supplier"
+      summary: "Create supplier"
+      description: "This can only be done by the logged in supplier."
+      operationId: "create_supplier"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created supplier object"
+        required: true
+        schema:
+          $ref: "#/definitions/Supplier"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "swagger_server.controllers.supplier_controller"
+  /supplier/{supplierId}:
+    get:
+      tags:
+      - "supplier"
+      summary: "Get supplier by supplier ID"
+      operationId: "get_supplier_by_id"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "supplierId"
+        in: "path"
+        description: "The id that needs to be fetched. Use supplier1 for testing."
+        required: true
+        type: "number"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Supplier"
+        "400":
+          description: "Invalid supplier id supplied"
+        "404":
+          description: "Supplier not found"
+      x-swagger-router-controller: "swagger_server.controllers.supplier_controller"
+    put:
+      tags:
+      - "supplier"
+      summary: "Updated supplier"
+      description: "Update a supplier"
+      operationId: "update_supplier"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "supplierId"
+        in: "path"
+        description: "The id that needs to be fetched. Use supplier1 for testing."
+        required: true
+        type: "number"
+      responses:
+        "400":
+          description: "Invalid supplier supplied"
+        "404":
+          description: "Supplier not found"
+      x-swagger-router-controller: "swagger_server.controllers.supplier_controller"
+    delete:
+      tags:
+      - "supplier"
+      summary: "Delete supplier"
+      description: "Delete"
+      operationId: "delete_supplier"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "supplierId"
+        in: "path"
+        description: "The id that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid supplier id supplied"
+        "404":
+          description: "Supplier not found"
+      x-swagger-router-controller: "swagger_server.controllers.supplier_controller"
+  /supplier/{supplierId}/costs/{widgetId}:
+    get:
+      tags:
+      - "supplier"
+      summary: "Get supplier costs by supplier ID"
+      operationId: "get_supplier_costs_by_id"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "widgetId"
+        in: "path"
+        description: "ID of widget to add a cost for"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "supplierId"
+        in: "path"
+        description: "The id that needs to be fetched. Use supplier1 for testing."
+        required: true
+        type: "number"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SupplierCosts"
+        "400":
+          description: "Invalid supplier id supplied"
+        "404":
+          description: "Supplier not found"
+      x-swagger-router-controller: "swagger_server.controllers.supplier_controller"
+    post:
+      tags:
+      - "supplier"
+      summary: "Create supplier cost by widget id"
+      description: "This can only be done by the logged in supplier."
+      operationId: "create_supplier_costs"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "supplierId"
+        in: "path"
+        description: "ID of supplier to add a cost for"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "widgetId"
+        in: "path"
+        description: "ID of widget to add a cost for"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "warehouse"
+        in: "formData"
+        description: "warehouse code"
+        required: true
+        type: "string"
+      - name: "quantity"
+        in: "formData"
+        description: "quantity"
+        required: true
+        type: "number"
+        format: "int64"
+      - name: "min_quantity"
+        in: "formData"
+        description: "min_quantity"
+        required: true
+        type: "number"
+        format: "int64"
+      - name: "cost"
+        in: "formData"
+        description: "cost"
+        required: true
+        type: "number"
+        format: "float64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SupplierCosts"
+        "400":
+          description: "Invalid supplier id supplied"
+        "404":
+          description: "Supplier not found"
+      x-swagger-router-controller: "swagger_server.controllers.supplier_controller"
+  /customer:
+    post:
+      tags:
+      - "customer"
+      summary: "Create customer"
+      description: "This can only be done by the logged in customer."
+      operationId: "create_customer"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created customer object"
+        required: true
+        schema:
+          $ref: "#/definitions/Customer"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "swagger_server.controllers.customer_controller"
+  /customer/{customername}:
+    get:
+      tags:
+      - "customer"
+      summary: "Get customer by customer name"
+      operationId: "get_customer_by_name"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "customername"
+        in: "path"
+        description: "The name that needs to be fetched. Use customer1 for testing."
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Customer"
+        "400":
+          description: "Invalid customername supplied"
+        "404":
+          description: "Customer not found"
+      x-swagger-router-controller: "swagger_server.controllers.customer_controller"
+    put:
+      tags:
+      - "customer"
+      summary: "Updated customer"
+      description: "This can only be done by the logged in customer."
+      operationId: "update_customer"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "customername"
+        in: "path"
+        description: "name that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated customer object"
+        required: true
+        schema:
+          $ref: "#/definitions/Customer"
+      responses:
+        "400":
+          description: "Invalid customer supplied"
+        "404":
+          description: "Customer not found"
+      x-swagger-router-controller: "swagger_server.controllers.customer_controller"
+    delete:
+      tags:
+      - "customer"
+      summary: "Delete customer"
+      description: "This can only be done by the logged in customer."
+      operationId: "delete_customer"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "customername"
+        in: "path"
+        description: "The name that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid customername supplied"
+        "404":
+          description: "Customer not found"
+      x-swagger-router-controller: "swagger_server.controllers.customer_controller"
+  /customer/{customerId}/prices/{widgetPackagingId}:
+    get:
+      tags:
+      - "customer"
+      summary: "Get customer costs"
+      operationId: "get_customer_prices_by_packaging_id"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "customerId"
+        in: "path"
+        description: "ID of supplier to add a cost for"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "widgetPackagingId"
+        in: "path"
+        description: "ID of packaging widget to add a cost for"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CustomerPrices"
+        "400":
+          description: "Invalid ids supplied"
+        "404":
+          description: "Customer not found"
+      x-swagger-router-controller: "swagger_server.controllers.customer_controller"
+    post:
+      tags:
+      - "customer"
+      summary: "Create customer costs"
+      description: "customer costs"
+      operationId: "create_customer_prices_by_packaging_id"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "customerId"
+        in: "path"
+        description: "ID of supplier to add a cost for"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "widgetPackagingId"
+        in: "path"
+        description: "ID of packaging widget to add a cost for"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "price"
+        in: "formData"
+        description: "price"
+        required: true
+        type: "number"
+        format: "float64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CustomerPrices"
+        "400":
+          description: "Invalid ids supplied"
+        "404":
+          description: "Customer not found"
+      x-swagger-router-controller: "swagger_server.controllers.customer_controller"
+definitions:
+  Widget:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Widget"
+    example:
+      name: "name"
+      id: 0
+  WidgetPackaging:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      widgetId:
+        $ref: "#/definitions/Widget/properties/id"
+      desc:
+        type: "string"
+      container:
+        type: "string"
+      quantity:
+        type: "number"
+    xml:
+      name: "WidgetPackaging"
+    example:
+      container: "container"
+      quantity: 6.02745618307040320615897144307382404804229736328125
+      widgetId: ""
+      id: 0
+      desc: "desc"
+  Customer:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Customer"
+    example:
+      name: "name"
+      id: 0
+  Supplier:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Supplier"
+    example:
+      name: "name"
+      id: 0
+  SupplierCosts:
+    type: "object"
+    properties:
+      widgetId:
+        $ref: "#/definitions/Widget/properties/id"
+      supplierId:
+        $ref: "#/definitions/Supplier/properties/id"
+      warehouse:
+        type: "string"
+      quantity:
+        type: "integer"
+        format: "int64"
+      min_quantity:
+        type: "integer"
+        format: "int64"
+      cost:
+        type: "number"
+        format: "float64"
+    xml:
+      name: "SupplierCosts"
+    example:
+      supplierId: ""
+      quantity: 0
+      cost: 1.46581298050294517310021547018550336360931396484375
+      min_quantity: 6
+      widgetId: ""
+      warehouse: "warehouse"
+  CustomerPrices:
+    type: "object"
+    properties:
+      widgetPackagingId:
+        $ref: "#/definitions/WidgetPackaging/properties/id"
+      customerId:
+        $ref: "#/definitions/Customer/properties/id"
+      price:
+        type: "number"
+        format: "float64"
+    xml:
+      name: "CustomerPrices"
+    example:
+      price: 0.80082819046101150206595775671303272247314453125
+      customerId: ""
+      widgetPackagingId: ""
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
